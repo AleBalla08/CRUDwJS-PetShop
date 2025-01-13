@@ -27,7 +27,6 @@ const createCliente = (nome, email) => {
         if (resposta.ok){
             return resposta.body
         } else {
-            alert('Não foi possível criar o cliente')
             throw new Error('erro ao criar o cliente')
         }
     })
@@ -62,7 +61,6 @@ const attClient = (id, nome,email) => {
         if(resposta.okj){
             return resposta.json()
         } else {
-            alert("Não foi possível atualizar o cliente")
             throw new Error('Erro ao atualizar o cliente')
         }
         
