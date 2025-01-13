@@ -7,7 +7,7 @@ const createNewLine = (nome, email, id) =>{
                 <td>${email}</td>
                 <td>
                     <ul class="tabela__botoes-controle">
-                        <li><a href="../telas/edita_cliente.html" class="botao-simples botao-simples--editar">Editar</a></li>
+                        <li><a href="../telas/edita_cliente.html?id=${id}" class="botao-simples botao-simples--editar">Editar</a></li>
                         <li><button class="botao-simples botao-simples--excluir" type="button">Excluir</button></li>
                     </ul>
                 </td>`
@@ -19,7 +19,9 @@ const createNewLine = (nome, email, id) =>{
 const tabela = document.querySelector('[data-tabela]')
 
 tabela.addEventListener('click', (event)=>{
-    const btnExcluir = event.target.className == 'botao-simples botao-simples--excluir'
+    const btnExcluir = event.target.className == 'botao-simples botao-simples--excluir';
+    const btnEditar = event.target.className == 'botao-simples botao-simples--editar';
+
     if (btnExcluir){
         const clientLine = event.target.closest('[data-id]')
         let id = clientLine.dataset.id
@@ -28,9 +30,12 @@ tabela.addEventListener('click', (event)=>{
     } 
 })
 
-clientService.clientsList()
-.then(data => {
-    
-            data.forEach(element => {
-                tabela.appendChild(createNewLine(element.nome, element.email, element.id))
-})})
+const render = async ()=>{
+    const listaClientes = await clientService.clientsList()
+           
+    listaClientes.forEach(element => {
+    tabela.appendChild(createNewLine(element.nome, element.email, element.id))
+    })
+
+}
+render()
